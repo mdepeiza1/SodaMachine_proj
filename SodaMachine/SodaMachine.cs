@@ -109,14 +109,75 @@ namespace SodaMachine
         //If the change cannot be made, return null.
         private List<Coin> GatherChange(double changeValue)
         {
-            
+            List<Coin> coins = new List<Coin>();
+            Coin q = new Quarter();
+            Coin d = new Dime();
+            Coin n = new Nickel();
+            Coin p = new Penny();
+
+           while(changeValue > 0)
+            {
+                while(changeValue % .25 > 0 && changeValue >= .25)
+                {
+                    if(_register.Remove(q))
+                    {
+                        coins.Add(q);
+                        changeValue -= .25;
+                    }
+                    else
+                    {
+                        DepositCoinsIntoRegister(coins);
+                        return null;
+                    }
+                }
+                while (changeValue % .10 > 0 && changeValue >= .10)
+                {
+                    if(_register.Remove(d))
+                    {
+                        coins.Add(d);
+                        changeValue -= .10;
+                    }
+                     else
+                    {
+                        DepositCoinsIntoRegister(coins);
+                        return null;
+                    }
+                }
+                while (changeValue % .05 > 0 && changeValue >= .05)
+                {
+                    if(_register.Remove(n))
+                    {
+                        coins.Add(n);
+                        changeValue -= .05;
+                    }
+                    else
+                    {
+                        DepositCoinsIntoRegister(coins);
+                        return null;
+                    }
+                }
+                while (changeValue % .01 > 0 && changeValue >= .01)
+                {
+                    if(_register.Remove(p))
+                    {
+                        coins.Add(p);
+                        changeValue -= .01;
+                    }
+                    else
+                    {
+                        DepositCoinsIntoRegister(coins);
+                        return null;
+                    }
+                }
+            }
+            return coins;
         }
         //Reusable method to check if the register has a coin of that name.
         //If it does have one, return true.  Else, false.
         private bool RegisterHasCoin(string name)
         {
-           
-        }
+            return (_register.Exists(x => x.Name == name));
+        }//
         //Reusable method to return a coin from the register.
         //Returns null if no coin can be found of that name.
         private Coin GetCoinFromRegister(string name)
