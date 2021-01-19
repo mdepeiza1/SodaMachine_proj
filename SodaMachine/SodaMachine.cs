@@ -29,8 +29,23 @@ namespace SodaMachine
             Quarter q = new Quarter();
             Dime d = new Dime();
             Nickel n = new Nickel();
-            Penny p = new Penny();
-            _register.Add(q);
+            Penny p = new Penny(); //coins for the register were instantiated here
+            for(int i = 0; i < 20; i++)
+            {
+                _register.Add(q);
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                _register.Add(d);
+            }
+            for (int i = 0; i < 20; i++)
+            {
+                _register.Add(n);
+            }
+            for (int i = 0; i < 50; i++) //coins were added to the register
+            {
+                _register.Add(p);
+            }
         }
         //A method to fill the sodamachines inventory with soda can objects.
         public void FillInventory()
