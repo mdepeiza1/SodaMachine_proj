@@ -52,8 +52,20 @@ namespace SodaMachine
         {
             Can rb = new RootBeer();
             Can c = new Cola();
-            Can os = new OrangeSoda();
+            Can os = new OrangeSoda();//instantiated the soda cans
 
+            for (int i = 0; i < 10; i++)
+            {
+                _inventory.Add(rb);
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                _inventory.Add(c);
+            }
+            for (int i = 0; i < 10; i++) //added 10 cans of each soda to the soda machine's inventory
+            {
+                _inventory.Add(os);
+            }
         }
         //Method to be called to start a transaction.
         //Takes in a customer which can be passed freely to which ever method needs it.
