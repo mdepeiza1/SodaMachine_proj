@@ -87,9 +87,9 @@ namespace SodaMachine
            
         }
         //Gets a soda from the inventory based on the name of the soda.
-        private Can GetSodaFromInventory(string nameOfSoda)
+        private Can GetSodaFromInventory(string nameOfSoda) // may need to remove the soda from the inventory
         {
-          
+            return _inventory.Find(x => x.Name == nameOfSoda);
         }
 
         //This is the main method for calculating the result of the transaction.
@@ -119,7 +119,7 @@ namespace SodaMachine
             {
                 while(changeValue % .25 > 0 && changeValue >= .25)
                 {
-                    if(_register.Remove(q))
+                    if(_register.Remove(q)) // might change this remove to RegisterHasCoin and implement remove in the if statement
                     {
                         coins.Add(q);
                         changeValue -= .25;
@@ -180,7 +180,7 @@ namespace SodaMachine
         }//
         //Reusable method to return a coin from the register.
         //Returns null if no coin can be found of that name.
-        private Coin GetCoinFromRegister(string name)
+        private Coin GetCoinFromRegister(string name) //might need to remove coin from the register
         {
             return _register.Find(x => x.Name == name);
         }
