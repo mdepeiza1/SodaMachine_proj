@@ -37,8 +37,9 @@ namespace SodaMachine
                     break;
                 }
                 coinsToPurchaseWith.Add(GetCoinFromWallet(selection));
-                inThere =  Wallet.Coins.Remove(Wallet.Coins.Find(x => x.Name == selection));
-                if(!inThere)
+                inThere =  Wallet.Coins.Remove(GetCoinFromWallet(selection));
+                //inThere = Wallet.Coins.Remove(Wallet.Coins.Find(x => x.Name == selection)); might need to use this instead
+                if (!inThere)
                 {
                     break;
                 }

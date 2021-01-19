@@ -84,7 +84,9 @@ namespace SodaMachine
         //pass payment to the calculate transaction method to finish up the transaction based on the results.
         private void Transaction(Customer customer)
         {
-           
+            Can chosenSoda = GetSodaFromInventory(UserInterface.SodaSelection(_inventory));
+            List<Coin> customerCoins = customer.GatherCoinsFromWallet(chosenSoda);
+            CalculateTransaction(customerCoins, chosenSoda, customer);
         }
         //Gets a soda from the inventory based on the name of the soda.
         private Can GetSodaFromInventory(string nameOfSoda) // may need to remove the soda from the inventory
@@ -101,7 +103,26 @@ namespace SodaMachine
         //If the payment does not meet the cost of the soda: dispense payment back to the customer.
         private void CalculateTransaction(List<Coin> payment, Can chosenSoda, Customer customer)
         {
-           
+           if(TotalCoinValue(payment) > chosenSoda.Price && TotalCoinValue(_register) >= TotalCoinValue(payment))
+            {
+                customer.AddCanToBackpack(chosenSoda);
+                //may need to add coins going into register here
+                customer.AddCoinsIntoWallet(GatherChange(DetermineChange(TotalCoinValue(payment), chosenSoda.Price)));
+            }
+           else if(TotalCoinValue(payment) > chosenSoda.Price && TotalCoinValue(_register) < TotalCoinValue(payment))
+            {
+                customer.AddCoinsIntoWallet(GatherChange(TotalCoinValue(payment)));
+            }
+           else if(TotalCoinValue(payment) == chosenSoda.Price)
+            {
+                //may need to add coins going into register here
+                customer.AddCanToBackpack(chosenSoda);
+            }
+            else //payment is less than soda price
+            {
+                //may need to add coins into register
+                customer.AddCoinsIntoWallet(GatherChange(TotalCoinValue(payment)));
+            }
         }
         //Takes in the value of the amount of change needed.
         //Attempts to gather all the required coins from the sodamachine's register to make change.
