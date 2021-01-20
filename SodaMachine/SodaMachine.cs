@@ -139,7 +139,7 @@ namespace SodaMachine
 
            while(changeValue > 0)
             {
-                while(changeValue % .25 > 0 && changeValue >= .25)
+                while(changeValue >= .25 && changeValue % .25 > 0)
                 {
                     if(_register.Remove(q)) // might change this remove to RegisterHasCoin and implement remove in the if statement
                     {
@@ -149,10 +149,12 @@ namespace SodaMachine
                     else
                     {
                         DepositCoinsIntoRegister(coins);
-                        return null;
+                        coins.Clear();
+                        return coins;
+                        //return null;
                     }
                 }
-                while (changeValue % .10 > 0 && changeValue >= .10)
+                while (changeValue >= .10 && changeValue % .10 > 0)
                 {
                     if(_register.Remove(d))
                     {
@@ -162,10 +164,12 @@ namespace SodaMachine
                      else
                     {
                         DepositCoinsIntoRegister(coins);
-                        return null;
+                        coins.Clear();
+                        return coins;
+                        //return null;
                     }
                 }
-                while (changeValue % .05 > 0 && changeValue >= .05)
+                while (changeValue >= .05 && changeValue % .05 > 0)
                 {
                     if(_register.Remove(n))
                     {
@@ -175,10 +179,12 @@ namespace SodaMachine
                     else
                     {
                         DepositCoinsIntoRegister(coins);
-                        return null;
+                        coins.Clear();
+                        return coins;
+                        //return null;
                     }
                 }
-                while (changeValue % .01 > 0 && changeValue >= .01)
+                while (changeValue >= .01 && changeValue % .01 > 0)
                 {
                     if(_register.Remove(p))
                     {
@@ -188,7 +194,9 @@ namespace SodaMachine
                     else
                     {
                         DepositCoinsIntoRegister(coins);
-                        return null;
+                        coins.Clear();
+                        return coins;
+                        //return null;
                     }
                 }
             }
@@ -222,12 +230,16 @@ namespace SodaMachine
             return total;
         }
         //Puts a list of coins into the soda machines register.
-        private void DepositCoinsIntoRegister(List<Coin> coins)
+        private void DepositCoinsIntoRegister(List<Coin> coins) // another version
+            // that passes in a credit card
         {
            for(int i = 0; i < coins.Count(); i++)
             {
                 _register.Add(coins[i]);
             }
         }
+
+        // create another form of Desposit method that accepts a credit care
+        // Card object => Wallet 
     }
 }

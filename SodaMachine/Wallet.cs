@@ -36,7 +36,7 @@ namespace SodaMachine
             {
                 Coins.Add(n);
             }
-            for (int i = 0; i < 31; i++) //coins were added to the register
+            for (int i = 0; i < 30; i++) //coins were added to the register
             {
                 Coins.Add(p);
             }
