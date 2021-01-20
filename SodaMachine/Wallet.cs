@@ -10,10 +10,12 @@ namespace SodaMachine
     {
         //Member Variables (Has A)
         public List<Coin> Coins;
+        public Card creditCard; //may need to change
         //Constructor (Spawner)
         public Wallet()
         {
             Coins = new List<Coin>();
+            creditCard = new Card(); //added later
             FillRegister();
         }
         //Member Methods (Can Do)

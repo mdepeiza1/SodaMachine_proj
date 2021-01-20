@@ -114,6 +114,7 @@ namespace SodaMachine
            else if(totalPayment > chosenSoda.Price && TotalCoinValue(_register) < totalPayment)
             {
                 customer.AddCoinsIntoWallet(GatherChange(TotalCoinValue(payment)));
+                //may need to test this outcome and output a different end message
             }
            else if(totalPayment == chosenSoda.Price)
             {
@@ -125,6 +126,7 @@ namespace SodaMachine
             {
                 //may need to add coins into register
                 customer.AddCoinsIntoWallet(GatherChange(TotalCoinValue(payment)));
+                //may need to test this outcome and output a different end message
             }
         }
         //Takes in the value of the amount of change needed.
@@ -243,5 +245,10 @@ namespace SodaMachine
 
         // create another form of Desposit method that accepts a credit care
         // Card object => Wallet 
+        private void DepositCoinsIntoRegister(Card creditCard) // another version
+                                                                // that passes in a credit card
+        {
+                _register.Add(creditCard);
+        }
     }
 }
