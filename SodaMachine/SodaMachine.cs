@@ -113,16 +113,16 @@ namespace SodaMachine
                     + TotalCoinValue(payment).ToString() + " was returned.");
                 //may need to test this outcome and output a different end message
             }
-            else if (!_inventory.Remove(chosenSoda) && totalPayment >= chosenSoda.Price)
+            else if (!_inventory.Contains(chosenSoda) && totalPayment >= chosenSoda.Price)
             {
                 customer.AddCoinsIntoWallet(payment);
                 UserInterface.OutputText("The inventory does not have that soda. " +
                     TotalCoinValue(payment).ToString() + " has been returned.");
             }
-            else if (totalPayment > chosenSoda.Price && TotalCoinValue(_register) >= totalPayment)
+            else if ((totalPayment > chosenSoda.Price + 0.001) && TotalCoinValue(_register) >= totalPayment)
             {
+                customer.AddCanToBackpack(chosenSoda);
                 _inventory.Remove(chosenSoda);
-                    customer.AddCanToBackpack(chosenSoda);
                     //may need to add coins going into register here
                     customer.AddCoinsIntoWallet(GatherChange(DetermineChange(TotalCoinValue(payment), chosenSoda.Price)));
                     UserInterface.EndMessage(chosenSoda.Name, DetermineChange(TotalCoinValue(payment), chosenSoda.Price));
@@ -134,12 +134,12 @@ namespace SodaMachine
                         TotalCoinValue(payment).ToString() + " has been returned.");
                     //may need to test this outcome and output a different end message
             }
-            else //payment is exact
+            else//payment is exact
             {
+                customer.AddCanToBackpack(chosenSoda);
                 _inventory.Remove(chosenSoda);
                     //may need to add coins going into register here
-                    customer.AddCanToBackpack(chosenSoda);
-                    UserInterface.EndMessage(chosenSoda.Name, DetermineChange(TotalCoinValue(payment), chosenSoda.Price));
+                    UserInterface.EndMessage(chosenSoda.Name, 0);
             }
         }
         //Takes in the value of the amount of change needed.
