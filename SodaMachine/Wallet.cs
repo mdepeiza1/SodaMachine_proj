@@ -26,6 +26,10 @@ namespace SodaMachine
             Coin d = new Dime();
             Coin n = new Nickel();
             Coin p = new Penny(); //coins for the register were instantiated here
+
+            Coin c = new Card(); //modified to add card
+            Coins.Add(c); //modified to add card
+
             for (int i = 0; i < 12; i++)
             {
                 Coins.Add(q);

@@ -48,7 +48,9 @@ namespace SodaMachine
                 Console.WriteLine("Enter -2- for Dime");
                 Console.WriteLine("Enter -3- for Nickel");
                 Console.WriteLine("Enter -4- for Penny");
-                Console.WriteLine("Enter -5- when finishd to deposit payment");
+                Console.WriteLine("Enter -5- for Card"); //added for Card
+                Console.WriteLine("Enter -6- when finishd to deposit payment");
+                //Console.WriteLine("Enter -5- when finishd to deposit payment"); changed for card
                 int.TryParse(Console.ReadLine(), out int selection);
                 validatedSelection = ValidateCoinChoice(selection);
                
@@ -76,6 +78,9 @@ namespace SodaMachine
                     Console.Clear();
                     return Tuple.Create(true, "Penny");
                 case 5:
+                    Console.Clear();
+                    return Tuple.Create(true, "Card");
+                case 6:
                     Console.Clear();
                     return Tuple.Create(true, "Done");
                 default:

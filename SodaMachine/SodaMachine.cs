@@ -157,21 +157,21 @@ namespace SodaMachine
 
            while(changeValue > 0)
             {
-                //while (changeValue >= 90 && changeValue % 90 > 0)
-                //{
-                //    if (_register.Remove(q)) // might change this remove to RegisterHasCoin and implement remove in the if statement
-                //    {
-                //        coins.Add(q);
-                //        changeValue -= .25;
-                //    }
-                //    else
-                //    {
-                //        DepositCoinsIntoRegister(c);
-                //        coins.Clear();
-                //        return coins;
-                //        //return null;
-                //    }
-                //}
+                while (changeValue >= 90 && changeValue % 90 > 0)
+                {
+                    if (_register.Remove(c)) // might change this remove to RegisterHasCoin and implement remove in the if statement
+                    {
+                        coins.Add(c);
+                        changeValue -= .25;
+                    }
+                    else
+                    {
+                        DepositCoinsIntoRegister(c);
+                        coins.Clear();
+                        return coins;
+                        //return null;
+                    }
+                }
 
 
                 while (changeValue >= .25 && changeValue % .25 > 0)
