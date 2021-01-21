@@ -30,6 +30,8 @@ namespace SodaMachine
             Coin d = new Dime();
             Coin n = new Nickel();
             Coin p = new Penny(); //coins for the register were instantiated here
+            Card c = new Card();
+            _register.Add(c);
             for(int i = 0; i < 20; i++)
             {
                 _register.Add(q);
@@ -154,15 +156,19 @@ namespace SodaMachine
             Coin n = new Nickel();
             Coin p = new Penny();
             Card c = new Card();
+            changeValue = Math.Round(changeValue, 2);
 
-           while(changeValue > 0)
+           while(Math.Round(changeValue, 2) > 0)
             {
-                while (changeValue >= 5 && changeValue % 5 > 0)
+                changeValue = Math.Round(changeValue, 2);
+                while (changeValue >= 5) //&& changeValue % 5 > 0)
                 {
-                    if (_register.Remove(c)) // might change this remove to RegisterHasCoin and implement remove in the if statement
+                    changeValue = Math.Round(changeValue, 2);
+                    if (RegisterHasCoin("Card")) // might change this remove to RegisterHasCoin and implement remove in the if statement
                     {
+                        _register.Remove(c);
                         coins.Add(c);
-                        changeValue -= .25;
+                        changeValue -= 5;
                     }
                     else
                     {
@@ -174,10 +180,12 @@ namespace SodaMachine
                 }
 
 
-                while (changeValue >= .25 && changeValue % .25 > 0)
+                while (changeValue >= .25) // && changeValue % .25 > 0)
                 {
-                    if(_register.Remove(q)) // might change this remove to RegisterHasCoin and implement remove in the if statement
+                    changeValue = Math.Round(changeValue, 2);
+                    if (RegisterHasCoin("Quarter")) // might change this remove to RegisterHasCoin and implement remove in the if statement
                     {
+                        _register.Remove(q);
                         coins.Add(q);
                         changeValue -= .25;
                     }
@@ -189,10 +197,12 @@ namespace SodaMachine
                         //return null;
                     }
                 }
-                while (changeValue >= .10 && changeValue % .10 > 0)
+                while (changeValue >= .10)// && changeValue % .10 > 0)
                 {
-                    if(_register.Remove(d))
+                    changeValue = Math.Round(changeValue, 2);
+                    if (RegisterHasCoin("Dime"))
                     {
+                        _register.Remove(d);
                         coins.Add(d);
                         changeValue -= .10;
                     }
@@ -204,10 +214,12 @@ namespace SodaMachine
                         //return null;
                     }
                 }
-                while (changeValue >= .05 && changeValue % .05 > 0)
+                while (changeValue >= .05) //&& changeValue % .05 > 0)
                 {
-                    if(_register.Remove(n))
+                    changeValue = Math.Round(changeValue, 2);
+                    if (RegisterHasCoin("Nickel"))
                     {
+                        _register.Remove(n);
                         coins.Add(n);
                         changeValue -= .05;
                     }
@@ -219,10 +231,12 @@ namespace SodaMachine
                         //return null;
                     }
                 }
-                while (changeValue >= .01 && changeValue % .01 > 0)
+                while (changeValue >= .01) //&& changeValue % .01 > 0)
                 {
-                    if(_register.Remove(p))
+                    changeValue = Math.Round(changeValue, 2);
+                    if (RegisterHasCoin("Penny"))
                     {
+                        _register.Remove(p);
                         coins.Add(p);
                         changeValue -= .01;
                     }
