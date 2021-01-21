@@ -11,7 +11,7 @@ namespace SodaMachine
         public Card()
         {
             this.Name = "Card";
-            this.value = 100;
+            this.value = 5;
         }
     }
 }

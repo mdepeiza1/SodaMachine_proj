@@ -54,15 +54,15 @@ namespace SodaMachine
             Can c = new Cola();
             Can os = new OrangeSoda();//instantiated the soda cans
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 10; i++)
             {
                 _inventory.Add(rb);
             }
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 10; i++)
             {
                 _inventory.Add(c);
             }
-            for (int i = 0; i < 1; i++) //added 10 cans of each soda to the soda machine's inventory
+            for (int i = 0; i < 10; i++) //added 10 cans of each soda to the soda machine's inventory
             {
                 _inventory.Add(os);
             }
@@ -157,7 +157,7 @@ namespace SodaMachine
 
            while(changeValue > 0)
             {
-                while (changeValue >= 90 && changeValue % 90 > 0)
+                while (changeValue >= 5 && changeValue % 5 > 0)
                 {
                     if (_register.Remove(c)) // might change this remove to RegisterHasCoin and implement remove in the if statement
                     {
