@@ -113,7 +113,9 @@ namespace SodaMachine
             }
            else if(totalPayment > chosenSoda.Price && TotalCoinValue(_register) < totalPayment)
             {
-                customer.AddCoinsIntoWallet(GatherChange(TotalCoinValue(payment)));
+                customer.AddCoinsIntoWallet(payment);
+                UserInterface.OutputText("The register does not have enough coins. " +
+                    TotalCoinValue(payment).ToString() + " has been returned.");
                 //may need to test this outcome and output a different end message
             }
            else if(totalPayment == chosenSoda.Price)
@@ -125,7 +127,9 @@ namespace SodaMachine
             else //payment is less than soda price
             {
                 //may need to add coins into register
-                customer.AddCoinsIntoWallet(GatherChange(TotalCoinValue(payment)));
+                customer.AddCoinsIntoWallet(payment);
+                UserInterface.OutputText("Your payment was not enough to purchase the soda. " 
+                    + TotalCoinValue(payment).ToString() + " was returned.");
                 //may need to test this outcome and output a different end message
             }
         }
@@ -140,10 +144,28 @@ namespace SodaMachine
             Coin d = new Dime();
             Coin n = new Nickel();
             Coin p = new Penny();
+            Card c = new Card();
 
            while(changeValue > 0)
             {
-                while(changeValue >= .25 && changeValue % .25 > 0)
+                //while (changeValue >= 90 && changeValue % 90 > 0)
+                //{
+                //    if (_register.Remove(q)) // might change this remove to RegisterHasCoin and implement remove in the if statement
+                //    {
+                //        coins.Add(q);
+                //        changeValue -= .25;
+                //    }
+                //    else
+                //    {
+                //        DepositCoinsIntoRegister(c);
+                //        coins.Clear();
+                //        return coins;
+                //        //return null;
+                //    }
+                //}
+
+
+                while (changeValue >= .25 && changeValue % .25 > 0)
                 {
                     if(_register.Remove(q)) // might change this remove to RegisterHasCoin and implement remove in the if statement
                     {
@@ -217,6 +239,7 @@ namespace SodaMachine
         private Coin GetCoinFromRegister(string name) //might need to remove coin from the register
         {
             return _register.Find(x => x.Name == name);
+            // for each loop
         }
         //Takes in the total payment amount and the price of can to return the change amount.
         private double DetermineChange(double totalPayment, double canPrice)
