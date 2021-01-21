@@ -54,15 +54,15 @@ namespace SodaMachine
             Can c = new Cola();
             Can os = new OrangeSoda();//instantiated the soda cans
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1; i++)
             {
                 _inventory.Add(rb);
             }
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1; i++)
             {
                 _inventory.Add(c);
             }
-            for (int i = 0; i < 10; i++) //added 10 cans of each soda to the soda machine's inventory
+            for (int i = 0; i < 1; i++) //added 10 cans of each soda to the soda machine's inventory
             {
                 _inventory.Add(os);
             }
@@ -85,8 +85,9 @@ namespace SodaMachine
         private void Transaction(Customer customer)
         {
             Can chosenSoda = GetSodaFromInventory(UserInterface.SodaSelection(_inventory));
-            List<Coin> customerCoins = customer.GatherCoinsFromWallet(chosenSoda);
-            CalculateTransaction(customerCoins, chosenSoda, customer);
+            
+                List<Coin> customerCoins = customer.GatherCoinsFromWallet(chosenSoda);
+                CalculateTransaction(customerCoins, chosenSoda, customer);
         }
         //Gets a soda from the inventory based on the name of the soda.
         private Can GetSodaFromInventory(string nameOfSoda) // may need to remove the soda from the inventory
@@ -104,33 +105,41 @@ namespace SodaMachine
         private void CalculateTransaction(List<Coin> payment, Can chosenSoda, Customer customer)
         {
             double totalPayment = TotalCoinValue(payment);
-           if(totalPayment > chosenSoda.Price && TotalCoinValue(_register) >= totalPayment)
-            {
-                customer.AddCanToBackpack(chosenSoda);
-                //may need to add coins going into register here
-                customer.AddCoinsIntoWallet(GatherChange(DetermineChange(TotalCoinValue(payment), chosenSoda.Price)));
-                UserInterface.EndMessage(chosenSoda.Name, DetermineChange(TotalCoinValue(payment), chosenSoda.Price));
-            }
-           else if(totalPayment > chosenSoda.Price && TotalCoinValue(_register) < totalPayment)
-            {
-                customer.AddCoinsIntoWallet(payment);
-                UserInterface.OutputText("The register does not have enough coins. " +
-                    TotalCoinValue(payment).ToString() + " has been returned.");
-                //may need to test this outcome and output a different end message
-            }
-           else if(totalPayment == chosenSoda.Price)
-            {
-                //may need to add coins going into register here
-                customer.AddCanToBackpack(chosenSoda);
-                UserInterface.EndMessage(chosenSoda.Name, DetermineChange(TotalCoinValue(payment), chosenSoda.Price));
-            }
-            else //payment is less than soda price
+            if(totalPayment < chosenSoda.Price)
             {
                 //may need to add coins into register
                 customer.AddCoinsIntoWallet(payment);
-                UserInterface.OutputText("Your payment was not enough to purchase the soda. " 
+                UserInterface.OutputText("Your payment was not enough to purchase the soda. "
                     + TotalCoinValue(payment).ToString() + " was returned.");
                 //may need to test this outcome and output a different end message
+            }
+            else if (!_inventory.Remove(chosenSoda) && totalPayment >= chosenSoda.Price)
+            {
+                customer.AddCoinsIntoWallet(payment);
+                UserInterface.OutputText("The inventory does not have that soda. " +
+                    TotalCoinValue(payment).ToString() + " has been returned.");
+            }
+            else if (totalPayment > chosenSoda.Price && TotalCoinValue(_register) >= totalPayment)
+            {
+                _inventory.Remove(chosenSoda);
+                    customer.AddCanToBackpack(chosenSoda);
+                    //may need to add coins going into register here
+                    customer.AddCoinsIntoWallet(GatherChange(DetermineChange(TotalCoinValue(payment), chosenSoda.Price)));
+                    UserInterface.EndMessage(chosenSoda.Name, DetermineChange(TotalCoinValue(payment), chosenSoda.Price));
+            }
+            else if (totalPayment > chosenSoda.Price && TotalCoinValue(_register) < totalPayment)
+            {
+                    customer.AddCoinsIntoWallet(payment);
+                    UserInterface.OutputText("The register does not have enough coins. " +
+                        TotalCoinValue(payment).ToString() + " has been returned.");
+                    //may need to test this outcome and output a different end message
+            }
+            else //payment is exact
+            {
+                _inventory.Remove(chosenSoda);
+                    //may need to add coins going into register here
+                    customer.AddCanToBackpack(chosenSoda);
+                    UserInterface.EndMessage(chosenSoda.Name, DetermineChange(TotalCoinValue(payment), chosenSoda.Price));
             }
         }
         //Takes in the value of the amount of change needed.
